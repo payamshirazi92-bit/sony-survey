@@ -599,48 +599,4 @@
 🧾 <b>شماره قبض:</b> ${serviceInfo.serviceNumber}
 👨‍🔧 <b>کارشناس:</b> ${serviceInfo.technicianName}
 ${serviceInfo.customerPhone ? `📱 <b>تلفن:</b> ${serviceInfo.customerPhone}\n` : ''}
-📊 <b>امتیازات مشتری:</b>
-• اخلاق و برخورد: ${starEmoji(ratings.conduct)}
-• پوشش و آراستگی: ${starEmoji(ratings.attire)}
-• کیفیت و دقت تعمیر: ${starEmoji(ratings.quality)}
-• زمان‌بندی و نظم: ${starEmoji(ratings.punctuality)}
-• شفافیت هزینه: ${starEmoji(ratings.pricing)}
-• رضایت کلی: ${starEmoji(ratings.overall)}
-
-⭐️ <b>میانگین رضایت:</b> ${avgScore.toFixed(1)} از ۵
-${wouldRecommend ? '✅ <b>پیشنهاد به دیگران:</b> بله' : '❌ <b>پیشنهاد به دیگران:</b> خیر'}
-
-💬 <b>پیام و نظر مشتری:</b>
-<i>${comment || 'بدون متن نظر'}</i>
-━━━━━━━━━━━━━━━━━━
-📍 مرکز خدمات تخصصی سونی کرج
-        `.trim();
-
-        // 1. Send to Telegram if Token & Chat ID configured
-        const botToken = urlParams.get('bot') || CONFIG.botToken;
-        const chatId = urlParams.get('chat') || CONFIG.chatId;
-
-        if (botToken && chatId) {
-            try {
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: telegramMessage,
-                        parse_mode: 'HTML'
-                    })
-                });
-            } catch (err) {
-                console.warn('Telegram notification failed:', err);
-            }
-        }
-
-        // Show Success Modal
-        setTimeout(() => {
-            document.getElementById('successModal').style.display = 'flex';
-        }, 300);
-    }
-</script>
-</body>
-</html>
+📊 <b>امتیازات مشتری
