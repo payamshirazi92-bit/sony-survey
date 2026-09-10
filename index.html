@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نظرسنجی و ارزیابی کیفیت خدمات سونی</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        :root {
+            --bg-color: #0d0f12;
+            --surface-color: #161b22;
+            --surface-card: #1f242d;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --gold: #f59e0b;
+            --gold-light: #fbbf24;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 16px 12px 40px;
+            direction: rtl;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+            background-color: var(--surface-color);
+            border-radius: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            padding: 24px 20px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--gold);
+            position: relative;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .logo-title {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .service-info-card {
+            background: rgba(0, 0, 0, 0.35);
+            margin: 16px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 12.5px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .info-val {
+            color: var(--gold-light);
+            font-weight: 700;
+        }
+
+        .form-body {
+            padding: 6px 16px 20px;
+        }
+
+        .rating-card {
+            background-color: var(--surface-card);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .rating-card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .rating-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rating-desc {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .stars-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .star-item {
+            font-size: 32px;
+            cursor: pointer;
+            color: #4b5563;
+            transition: color 0.15s, transform 0.15s;
+            user-select: none;
+        }
+
+        .star-item:hover,
+        .star-item:hover ~ .star-item,
+        .star-item.active,
+        .star-item.active ~ .star-item {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .recommend-toggle {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .recommend-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .recommend-btn.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: #34d399;
+        }
+
+        .recommend-btn.no.active {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--danger);
+            color: #f87171;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: vertical;
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+            transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: #4b5563;
+            color: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .error-banner {
+            display: none;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid var(--danger);
+            color: #f87171;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12.5px;
+            margin-bottom: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 14px;
+            line-height: 1.6;
+        }
+
+        .footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* Success Dialog Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--surface-card);
+            border-radius: 20px;
+            padding: 28px 20px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 2px solid var(--gold);
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .success-icon {
+            font-size: 55px;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .contact-btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-call {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-site {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #000000;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <div class="brand-badge">SONY SERVICE KARAJ</div>
+        <h1 class="logo-title">مرکز سرویس و خدمات سونی</h1>
+        <p class="subtitle">فرم آنلاین سنجش کیفیت، تکریم مشتری و خدمات پس از فروش</p>
+    </header>
+
+    <div class="service-info-card">
+        <div class="info-item">
+            <span class="info-label">مشتری گرامی:</span>
+            <span class="info-val" id="disp-customer">در حال بارگذاری...</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">مدل دستگاه:</span>
+            <span class="info-val" id="disp-model">-</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">شماره قبض / پرونده:</span>
+            <span class="info-val" id="disp-ref">-</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">کارشناس فنی:</span>
+            <span class="info-val" id="disp-tech">پیام شیرازی</span>
+        </div>
+    </div>
+
+    <form class="form-body" id="surveyForm">
+        <div class="error-banner" id="errorBanner">مشکلی در ارسال نظر شما رخ داد. لطفاً دوباره تلاش کنید.</div>
+
+        <!-- Criterion 1 -->
+        <div class="rating-card">
+            <div class="rating-title">۱. نحوه برخورد و اخلاق کارشناس</div>
+            <div class="rating-desc">میزان احترام، صبوری و پاسخگویی شفاف کارشناس به سوالات شما</div>
+            <div class="stars-container" data-field="conduct">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+        </div>
+
+        <!-- Criterion 2 -->
+        <div class="rating-card">
+            <div class="rating-title">۲. پوشش، نظم و آراستگی ظاهری</div>
+            <div class="rating-desc">آراستگی و رعایت پروتکل‌های بهداشتی و حرفه‌ای مرکز سونی</div>
+            <div class="stars-container" data-field="attire">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+        </div>
+
+        <!-- Criterion 3 -->
+        <div class="rating-card">
+            <div class="rating-title">۳. کیفیت و دقت در تعمیرات</div>
+            <div class="rating-desc">رفع کامل ایراد فنی، اصالت قطعات و عملکرد استاندارد دستگاه</div>
+            <div class="stars-container" data-field="quality">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+        </div>
+
+        <!-- Criterion 4 -->
+        <div class="rating-card">
+            <div class="rating-title">۴. زمان‌بندی و حضور به موقع</div>
+            <div class="rating-desc">خوش‌قولی، هماهنگی قبلی و انجام به موقع سرویس یا تحویل</div>
+            <div class="stars-container" data-field="punctuality">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+        </div>
+
+        <!-- Criterion 5 -->
+        <div class="rating-card">
+            <div class="rating-title">۵. شفافیت هزینه و صدور فاکتور رسمی</div>
+            <div class="rating-desc">تناسب هزینه‌های اعلام شده و وضوح شرایط ضمانت کتبی</div>
+            <div class="stars-container" data-field="pricing">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+        </div>
+
+        <!-- Criterion 6 -->
+        <div class="rating-card">
+            <div class="rating-title">۶. رضایت کلی از خدمات مرکز سونی</div>
+            <div class="rating-desc">آیا این مرکز را به دوستان و آشنایان خود پیشنهاد می‌کنید؟</div>
+            <div class="stars-container" data-field="overall">
+                <span class="star-item" data-val="5">★</span>
+                <span class="star-item" data-val="4">★</span>
+                <span class="star-item" data-val="3">★</span>
+                <span class="star-item" data-val="2">★</span>
+                <span class="star-item" data-val="1">★</span>
+            </div>
+            <div class="recommend-toggle">
+                <div class="recommend-btn active" id="rec-yes">✓ بله، پیشنهاد می‌کنم</div>
+                <div class="recommend-btn no" id="rec-no">✕ خیر</div>
+            </div>
+        </div>
+
+        <!-- Feedback comment -->
+        <div class="form-group">
+            <label class="form-label" for="commentInput">انتقادات، پیشنهادات یا پیام شما برای مدیریت:</label>
+            <textarea class="form-control" id="commentInput" rows="3" placeholder="توضیحات تکمیلی، نظرات یا تشکر شما..." maxlength="500"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+            <span>ثبت نهایی و ارسال نظر</span>
+        </button>
+
+        <div class="footer">
+            <p>نشانی مرکز: عظیمیه، طالقانی شمالی، نبش خیابان مریم، برج قائم، طبقه دوم واحد 12 و 13</p>
+            <p>تلفن پشتیبانی و گارانتی: <a href="tel:+982634400000">۰۲۶-۳۴۴۰۰۰۰۰ | ۰۹۱۲۱۷۵۸۹۵۴</a></p>
+            <p>وب‌سایت رسمی: <a href="https://Sonykarajservice.ir" target="_blank" rel="noopener">Sonykarajservice.ir</a></p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Dialog -->
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <div class="success-icon">⭐</div>
+        <h2 style="font-size: 18px; color: #ffffff; margin-bottom: 8px;">با تشکر از همراهی شما</h2>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.7;">
+            نظر و امتیاز شما با موفقیت ثبت و به اطلاع مدیریت مرکز سونی رسید.
+            امیدواریم همیشه تجربه‌ای دلپذیر از کیفیت دستگاه‌های سونی داشته باشید.
+        </p>
+        <div class="contact-btn-row">
+            <a href="tel:+982634400000" class="btn-action btn-call">📞 تماس با مرکز</a>
+            <a href="https://Sonykarajservice.ir" target="_blank" rel="noopener" class="btn-action btn-site">🌐 سایت سونی</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // State
+    const ratings = {
+        conduct: 5,
+        attire: 5,
+        quality: 5,
+        punctuality: 5,
+        pricing: 5,
+        overall: 5
+    };
+    let wouldRecommend = true;
+
+    // Parse URL Query Params (display-only; never used for submission destinations)
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceInfo = {
+        customerName: urlParams.get('c') || 'مشتری گرامی',
+        deviceModel: urlParams.get('m') || 'تلویزیون سونی BRAVIA',
+        serviceNumber: urlParams.get('ref') || '-',
+        technicianName: urlParams.get('tech') || 'پیام شیرازی',
+        customerPhone: urlParams.get('p') || ''
+    };
+
+    document.getElementById('disp-customer').textContent = serviceInfo.customerName;
+    document.getElementById('disp-model').textContent = serviceInfo.deviceModel;
+    document.getElementById('disp-ref').textContent = serviceInfo.serviceNumber;
+    document.getElementById('disp-tech').textContent = serviceInfo.technicianName;
+
+    // Init Star Click Handlers
+    document.querySelectorAll('.stars-container').forEach(container => {
+        const field = container.getAttribute('data-field');
+        const stars = container.querySelectorAll('.star-item');
+
+        updateStarsUI(container, 5);
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = parseInt(star.getAttribute('data-val'), 10);
+                ratings[field] = val;
+                updateStarsUI(container, val);
+            });
+        });
+    });
+
+    function updateStarsUI(container, val) {
+        const stars = container.querySelectorAll('.star-item');
+        stars.forEach(star => {
+            const starVal = parseInt(star.getAttribute('data-val'), 10);
+            star.classList.toggle('active', starVal <= val);
+        });
+    }
+
+    function setRecommend(val) {
+        wouldRecommend = val;
+        document.getElementById('rec-yes').classList.toggle('active', val);
+        document.getElementById('rec-no').classList.toggle('active', !val);
+    }
+
+    document.getElementById('rec-yes').addEventListener('click', () => setRecommend(true));
+    document.getElementById('rec-no').addEventListener('click', () => setRecommend(false));
+
+    document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        const errorBanner = document.getElementById('errorBanner');
+        const comment = document.getElementById('commentInput').value.trim();
+
+        errorBanner.style.display = 'none';
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="spinner"></div><span>در حال ثبت بازخورد...</span>';
+
+        try {
+            const res = await fetch('/api/submit-survey', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customerName: serviceInfo.customerName,
+                    deviceModel: serviceInfo.deviceModel,
+                    serviceNumber: serviceInfo.serviceNumber,
+                    technicianName: serviceInfo.technicianName,
+                    customerPhone: serviceInfo.customerPhone,
+                    conductRating: ratings.conduct,
+                    attireRating: ratings.attire,
+                    qualityRating: ratings.quality,
+                    punctualityRating: ratings.punctuality,
+                    pricingRating: ratings.pricing,
+                    overallRating: ratings.overall,
+                    wouldRecommend,
+                    comment
+                })
+            });
+
+            if (!res.ok) throw new Error('Submit failed');
+
+            document.getElementById('successModal').style.display = 'flex';
+        } catch (err) {
+            console.error('Survey submission failed:', err);
+            errorBanner.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>ثبت نهایی و ارسال نظر</span>';
+        }
+    });
+</script>
+</body>
+</html>
